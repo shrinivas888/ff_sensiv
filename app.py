@@ -84,13 +84,19 @@ h1, h2, h3 {
 st.markdown("<div class='banner'>🔥 FF Sensitivity Generator — PRO</div>", unsafe_allow_html=True)
 
 # ---------------------------------------------------------
-# DEVICE INFO
+# DEVICE INFO (Optional)
 # ---------------------------------------------------------
 st.subheader("📱 Device Info (Optional)")
-device_name = st.text_input("Enter your device/platform", placeholder="e.g., Poco X3, iPhone 13, Realme 10")
-if device_name.strip() == "":
+device_input = st.text_input(
+    "Enter your device/platform (Optional)", 
+    placeholder="e.g., Poco X3, iPhone 13, Realme 10"
+)
+
+if device_input.strip():  # Show only if user types something
+    device_name = device_input.strip()
+    st.info(f"Detected Device: **{device_name}**")
+else:
     device_name = "Unknown Device"
-st.info(f"Detected Device: **{device_name}**")
 
 # ---------------------------------------------------------
 # TABS
@@ -120,7 +126,7 @@ with tab1:
     generate = st.button("🚀 Generate Sensitivity")
 
     if generate:
-        # Base sensitivity for FF (max 200)
+        # Base sensitivity (max 200)
         base = {
             "Rusher": [180, 170, 160, 140, 120],
             "Mid-range": [150, 140, 135, 130, 140],
@@ -139,7 +145,7 @@ with tab1:
         final_sens = [min(int(x*factor), 200) for x in base]
         labels = ["General", "Red Dot", "2X Scope", "4X Scope", "Sniper Scope"]
 
-        # Visualization with Matplotlib (smaller for mobile)
+        # Matplotlib visualization
         st.subheader("📊 Sensitivity Preview")
         fig, ax = plt.subplots(figsize=(6,3))
         bars = ax.bar(labels, final_sens, color="#ff416c", alpha=0.85, edgecolor="white")
@@ -149,14 +155,14 @@ with tab1:
         ax.bar_label(bars, labels=[str(v) for v in final_sens], color="white", fontsize=10)
         st.pyplot(fig)
 
-        # Save session
+        # Save to session
         st.session_state["saved_sens"] = {
             "Device": device_name,
             "Gameplay": gameplay,
             "Sensitivity": dict(zip(labels, final_sens))
         }
 
-        # Collapsible JSON for mobile
+        # Expandable JSON view
         with st.expander("🔍 View Generated Sensitivity"):
             st.json(st.session_state["saved_sens"])
 
