@@ -11,13 +11,7 @@
 - 🌐 Fully Mobile-Friendly
 - ⚡ Tabs for Device Benchmark and AI Training Mode (coming soon)
 
-## Usage
 
-1. Open the app on [Streamlit Cloud](https://share.streamlit.io/) (or your deployed URL)
-2. Enter your device/platform (optional)
-3. Select gameplay style
-4. Click **Generate Sensitivity**
-5. View chart and download JSON
 
 ## Installation / Running Locally
 
